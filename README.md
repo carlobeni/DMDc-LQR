@@ -12,9 +12,23 @@ The MATLAB scripts in this repository are designed to facilitate the testing and
 
 - **`main_test_performance.m`**: Performs a detailed performance comparison for a specific matrix (e.g., `sherman5`). It executes four different solvers—standard GMRES, LGMRES, and their DMDc-LQR adaptive variants—to compare convergence rates and residual history. The output includes comparative plots and specific metrics on how the adaptive controller adjusts the restart parameter $m$ during the iteration process.
 
-- **`main_test_collection.m**`: This script is a batch-processing tool designed for large-scale benchmarking across multiple matrices stored in a local folder. It automates the testing of the entire collection, records execution times and cycle counts, and exports the results into CSV files for further analysis. It also generates log-scale bar charts to visualize the relative speedup and efficiency of the DMDc-LQR strategy compared to fixed-restart baselines.
+- **`main_test_collection.m`**: This script is a batch-processing tool designed for large-scale benchmarking across multiple matrices stored in a local folder. It automates the testing of the entire collection, records execution times and cycle counts, and exports the results into CSV files for further analysis. It also generates log-scale bar charts to visualize the relative speedup and efficiency of the DMDc-LQR strategy compared to fixed-restart baselines.
 
 - **`main_test_fieldAlpha.m`**: This script focuses on sensitivity analysis regarding the LQR penalty parameter $\alpha$. By running simulations over a range of alpha values for a single problem, it helps determine the optimal balance between control effort and convergence speed. The results are visualized in a 3D plot that illustrates the relationship between the penalty value, the number of cycles, and the final residual.
+
+## Reproducibility
+
+We provide the following scripts to reproduce the numerical experiments and figures presented in the paper. The adaptive DMDc-LQR framework identifies an internal linear surrogate model (ILSM) to compute the optimal restart parameter sequence $\{m_k\}$.
+
+| Figure / Section | Description | Reference Script |
+| :--- | :--- | :--- |
+| **Fig. 4.1 & 4.2** | Residual norm evolution vs. cycles for `sherman5` and `orsirr1` matrices. | `main_test_performance.m` |
+| **Fig. 4.3** | Comparison of adaptive $m_k$ trajectories vs. fixed-restart baselines. | `main_test_performance.m` |
+| **Fig. 4.6** | Sensitivity analysis of the LQR penalty parameter $\alpha$ (3D Surface plot). | `main_test_fieldAlpha.m` |
+| **Table 2 & Fig. 4.5** | Large-scale benchmark results (Speedup/Efficiency) on SuiteSparse collection. | `main_test_collection.m` |
+| **Appendix A** | Eigenvalue/Ritz value distribution and DMDc mode analysis for the ILSM. | `main_test_performance.m` |
+
+> **Note:** The matrices used in these experiments are part of the SuiteSparse Matrix Collection. The scripts are configured to load them from a local `mat_collection_test_full/` folder or download them automatically where applicable.
 
 ## Citation
 
