@@ -1,6 +1,6 @@
 # Optimal Control for Restarting Minimal Residual Krylov Solvers via Data-Driven Residual Dynamics
 
-This repository contains the MATLAB implementation and numerical experiments presented in the paper: **"OPTIMAL CONTROL FOR RESTARTING MINIMAL RESIDUAL KRYLOV SOLVERS VIA DATA-DRIVEN RESIDUAL DYNAMICS"**. This framework introduces a data-driven approach to adaptively select the restart parameter $m$ in Krylov subspace solvers (specifically GMRES and LGMRES) by modeling the restart cycles as a discrete-time dynamical system. Restarted GMRES(m) is widely used for large, sparse, non-symmetric linear systems. However, choosing the optimal restart parameter $m$ is challenging; a static choice can lead to stagnation or inefficient convergence.
+This repository contains the MATLAB implementation and numerical experiments presented in the paper: **"OPTIMAL CONTROL FOR RESTARTING MINIMAL RESIDUAL KRYLOV SOLVERS VIA DATA-DRIVEN RESIDUAL DYNAMICS"**. This framework introduces a data-driven approach to adaptively select the restart parameter $m$ in Krylov subspace solvers (specifically GMRES($m$) and LGMRES($m,l$)) by modeling the restart cycles as a discrete-time dynamical system. GMRES($m$) is widely used for large, sparse, non-symmetric linear systems. However, choosing the optimal restart parameter $m$ is challenging; a static choice can lead to stagnation or inefficient convergence.
 
 Our approach utilizes:
 - **Dynamic Mode Decomposition with control (DMDc):** To identify a low-dimensional Internal Linear Surrogate Model (ILSM) that captures cycle-to-cycle residual dynamics.
@@ -10,11 +10,11 @@ Our approach utilizes:
 
 The MATLAB scripts in this repository are designed to facilitate the testing and validation of the DMDc-LQR framework. They are organized into three main scripts:
 
-- **`main_test_performance.m`**: Performs a detailed performance comparison for a specific matrix (e.g., `sherman5`). It executes four different solvers—standard GMRES, LGMRES, and their DMDc-LQR adaptive variants—to compare convergence rates and residual history. The output includes comparative plots and specific metrics on how the adaptive controller adjusts the restart parameter $m$ during the iteration process.
+- **`main_test_performance.m`**: Performs a detailed performance comparison for a specific matrix (e.g., `sherman5`). It executes four different solvers—standard GMRES($m$), LGMRES($m,l$), and their DMDc-LQR adaptive variants—to compare convergence rates and residual history. The output includes comparative plots and specific metrics on how the adaptive controller adjusts the restart parameter $m$ during the iteration process.
 
-- **`main_test_collection.m`**: This script is a batch-processing tool designed for large-scale benchmarking across multiple matrices stored in a local folder. It automates the testing of the entire collection, records execution times and cycle counts, and exports the results into CSV files for further analysis. It also generates log-scale bar charts to visualize the relative speedup and efficiency of the DMDc-LQR strategy compared to fixed-restart baselines.
+- **`main_test_collection.m`**: This script is a batch-processing tool designed for large-scale benchmarking across multiple matrices stored in a local folder. It automates testing of the entire collection, records execution times and cycle counts, and exports the results into CSV files for further analysis. It also generates log-scale bar charts to visualize the relative speedup and efficiency of the DMDc-LQR strategy compared to fixed-restart baselines.
 
-- **`main_test_fieldAlpha.m`**: This script focuses on sensitivity analysis regarding the LQR penalty parameter $\alpha$. By running simulations over a range of alpha values for a single problem, it helps determine the optimal balance between control effort and convergence speed. The results are visualized in a 3D plot that illustrates the relationship between the penalty value, the number of cycles, and the final residual.
+- **`main_test_fieldAlpha.m`**: This script focuses on sensitivity analysis regarding the LQR penalty parameter $\alpha$. Running simulations over a range of $\alpha$ values for a single problem helps determine the optimal balance between control effort and convergence speed. The results are visualized in a 3D plot that illustrates the relationship between the penalty value, the number of cycles, and the final residual.
 
 ## Reproducibility
 
@@ -26,7 +26,7 @@ We provide the following scripts to reproduce the numerical experiments and figu
 | **Fig. 4.3** | Comparison of adaptive $m_k$ trajectories vs. fixed-restart baselines. | `main_test_performance.m` |
 | **Fig. 4.6** | Sensitivity analysis of the LQR penalty parameter $\alpha$ (3D Surface plot). | `main_test_fieldAlpha.m` |
 | **Table 2 & Fig. 4.5** | Large-scale benchmark results (Speedup/Efficiency) on SuiteSparse collection. | `main_test_collection.m` |
-| **Appendix A** | Eigenvalue/Ritz value distribution and DMDc mode analysis for the ILSM. | `main_test_performance.m` |
+
 
 > **Note:** The matrices used in these experiments are part of the SuiteSparse Matrix Collection. The scripts are configured to load them from a local `mat_collection_test_full/` folder or download them automatically where applicable.
 
